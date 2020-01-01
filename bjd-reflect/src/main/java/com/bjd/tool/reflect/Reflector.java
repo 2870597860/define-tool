@@ -1,5 +1,6 @@
 package com.bjd.tool.reflect;
 
+import com.bjd.tool.reflect.exception.ReflectionException;
 import com.esotericsoftware.reflectasm.MethodAccess;
 
 import java.util.ArrayList;
@@ -12,9 +13,8 @@ public class Reflector {
     private final MethodAccess methodAccess;
     private final List<String> readablePropertyNames = new ArrayList<>();
     private final List<String> writeablePropertyNames= new ArrayList<>();
-    private final Map<String, Integer> getMethods = new HashMap();
-    private final Map<String, Integer> setMethods = new HashMap();
-    private final Map<String, Integer> otherMethods = new HashMap();
+    private final Map<String, MethodInfo> getMethods = new HashMap();
+    private final Map<String, MethodInfo> setMethods = new HashMap();
 
     public Reflector(Class<?> type) {
         this.type = type;
@@ -32,22 +32,38 @@ public class Reflector {
             if ((methodName.startsWith("get") && methodName.length() > 3)
                     || (methodName.startsWith("is") && methodName.length() > 2)) {
 
-                getMethods.put(name,i);
+                getMethods.put(name,new MethodInfo(i,methodName,name));
                 readablePropertyNames.add(i,name);
                 continue;
             }
 
             if (name.startsWith("set") && name.length() > 3) {
                 if (parameterTypes[i].length == 1) {
-                    setMethods.put(name,i);
+                    setMethods.put(name,new MethodInfo(i,methodName,name));
                     writeablePropertyNames.add(i,name);
                 }
                 continue;
             }
 
-            otherMethods.put(name,i);
         }
     }
-// 获取方法包装类
-    private Object get
+    public MethodAccess findMethodAccess(){
+        return this.methodAccess;
+    }
+
+    public MethodInfo findGetMethodInfo(String propertyName){
+        MethodInfo methodInfo = getMethods.get(propertyName);
+        if (methodInfo == null) {
+            throw new ReflectionException("There is no getter for property named '" + propertyName + "' in '" + type + "'");
+        }
+        return methodInfo;
+    }
+    public MethodInfo findSetMethodInfo(String propertyName){
+        MethodInfo methodInfo = setMethods.get(propertyName);
+        if (methodInfo == null) {
+            throw new ReflectionException("There is no setter for property named '" + propertyName + "' in '" + type + "'");
+        }
+        return methodInfo;
+    }
 }
+

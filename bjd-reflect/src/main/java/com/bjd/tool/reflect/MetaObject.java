@@ -16,14 +16,20 @@ public class MetaObject {
         if(originalObject instanceof ObjectWrapper){
             this.objectWrapper = (ObjectWrapper)originalObject;
         }else{
-            this.objectWrapper = new BeanWrapper();
+            this.objectWrapper = new BeanWrapper(originalObject,this);
         }
-
     }
 
     public static MetaObject forObject(Object originalObject) throws Exception {
         nullProcess(originalObject);
         return new MetaObject(originalObject,new DefaultReflectorFactory());
+    }
+
+    public Object getValue(String name) {
+        return objectWrapper.get(name);
+    }
+    public void setValue(String name) {
+        objectWrapper.set(name,originalObject);
     }
 
     public ReflectorFactory getReflectorFactory() {
@@ -36,10 +42,6 @@ public class MetaObject {
 
     public ObjectWrapper getObjectWrapper() {
         return objectWrapper;
-    }
-
-    public void setValue(){
-
     }
 
     private static void nullProcess(Object originalObject) throws Exception {

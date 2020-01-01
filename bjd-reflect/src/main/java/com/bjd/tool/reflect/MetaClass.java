@@ -1,5 +1,7 @@
 package com.bjd.tool.reflect;
 
+import com.esotericsoftware.reflectasm.MethodAccess;
+
 public class MetaClass {
     private final ReflectorFactory reflectorFactory;
     private final Reflector reflector;
@@ -13,6 +15,17 @@ public class MetaClass {
         return new MetaClass(type, reflectorFactory);
     }
 
+    public MethodInfo getGetMethInfo(String name) {
+        return reflector.findGetMethodInfo(name);
+    }
+
+    public MethodInfo getSetMethInfo(String name) {
+        return reflector.findSetMethodInfo(name);
+    }
+
+    public MethodAccess getMethodAccess() {
+        return reflector.findMethodAccess();
+    }
 
 
 }

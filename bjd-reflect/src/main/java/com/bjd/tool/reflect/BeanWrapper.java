@@ -1,10 +1,13 @@
 package com.bjd.tool.reflect;
 
+import com.esotericsoftware.reflectasm.MethodAccess;
+
 public class BeanWrapper implements ObjectWrapper{
 
     private final Object bean;
 
     private final MetaClass metaClass;
+
 
     public BeanWrapper(Object bean, MetaObject metaObject) {
         this.bean = bean;
@@ -12,12 +15,16 @@ public class BeanWrapper implements ObjectWrapper{
     }
 
     @Override
-    public Object get() {
-        return null;
+    public void set(String propertyName,Object value) {
+        MethodAccess methodAccess = metaClass.getMethodAccess();
+        MethodInfo setMethInfo = metaClass.getSetMethInfo(propertyName);
+        methodAccess.invoke(bean,setMethInfo.getIndex(),value);
     }
 
     @Override
-    public void set() {
-
+    public Object get(String propertyName) {
+        MethodAccess methodAccess = metaClass.getMethodAccess();
+        MethodInfo getMethInfo = metaClass.getGetMethInfo(propertyName);
+        return  methodAccess.invoke(bean,getMethInfo.getIndex());
     }
 }
