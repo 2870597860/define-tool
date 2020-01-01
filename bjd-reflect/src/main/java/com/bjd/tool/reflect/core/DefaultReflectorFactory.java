@@ -1,4 +1,4 @@
-package com.bjd.tool.reflect;
+package com.bjd.tool.reflect.core;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;

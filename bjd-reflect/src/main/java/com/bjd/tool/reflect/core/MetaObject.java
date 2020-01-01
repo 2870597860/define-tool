@@ -1,4 +1,7 @@
-package com.bjd.tool.reflect;
+package com.bjd.tool.reflect.core;
+
+import com.bjd.tool.reflect.wrapper.BeanWrapper;
+import com.bjd.tool.reflect.wrapper.ObjectWrapper;
 
 /**
  * Hello world!
@@ -28,8 +31,8 @@ public class MetaObject {
     public Object getValue(String name) {
         return objectWrapper.get(name);
     }
-    public void setValue(String name) {
-        objectWrapper.set(name,originalObject);
+    public void setValue(String name,Object value) {
+        objectWrapper.set(name,value);
     }
 
     public ReflectorFactory getReflectorFactory() {

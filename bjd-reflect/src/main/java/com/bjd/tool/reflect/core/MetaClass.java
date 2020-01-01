@@ -1,5 +1,6 @@
-package com.bjd.tool.reflect;
+package com.bjd.tool.reflect.core;
 
+import com.bjd.tool.reflect.MethodInfo;
 import com.esotericsoftware.reflectasm.MethodAccess;
 
 public class MetaClass {

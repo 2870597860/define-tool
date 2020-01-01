@@ -1,4 +1,4 @@
-package com.bjd.tool.reflect;
+package com.bjd.tool.reflect.core;
 
 public interface ReflectorFactory {
 

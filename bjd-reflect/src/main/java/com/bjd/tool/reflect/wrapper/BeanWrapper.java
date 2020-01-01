@@ -1,8 +1,11 @@
-package com.bjd.tool.reflect;
+package com.bjd.tool.reflect.wrapper;
 
+import com.bjd.tool.reflect.MethodInfo;
+import com.bjd.tool.reflect.core.MetaClass;
+import com.bjd.tool.reflect.core.MetaObject;
 import com.esotericsoftware.reflectasm.MethodAccess;
 
-public class BeanWrapper implements ObjectWrapper{
+public class BeanWrapper implements ObjectWrapper {
 
     private final Object bean;
 

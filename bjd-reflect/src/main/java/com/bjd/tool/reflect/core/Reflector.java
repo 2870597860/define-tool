@@ -1,5 +1,7 @@
-package com.bjd.tool.reflect;
+package com.bjd.tool.reflect.core;
 
+import com.bjd.tool.reflect.MethodInfo;
+import com.bjd.tool.reflect.PropertyNamer;
 import com.bjd.tool.reflect.exception.ReflectionException;
 import com.esotericsoftware.reflectasm.MethodAccess;
 
@@ -33,14 +35,14 @@ public class Reflector {
                     || (methodName.startsWith("is") && methodName.length() > 2)) {
 
                 getMethods.put(name,new MethodInfo(i,methodName,name));
-                readablePropertyNames.add(i,name);
+                readablePropertyNames.add(name);
                 continue;
             }
 
-            if (name.startsWith("set") && name.length() > 3) {
+            if (methodName.startsWith("set") && methodName.length() > 3) {
                 if (parameterTypes[i].length == 1) {
                     setMethods.put(name,new MethodInfo(i,methodName,name));
-                    writeablePropertyNames.add(i,name);
+                    writeablePropertyNames.add(name);
                 }
                 continue;
             }
