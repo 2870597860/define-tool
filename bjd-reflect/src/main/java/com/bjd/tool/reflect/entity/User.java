@@ -1,4 +1,4 @@
-package com.bjd.tool.reflect;
+package com.bjd.tool.reflect.entity;
 
 /**
  * Created by Administrator on 2020/1/1.

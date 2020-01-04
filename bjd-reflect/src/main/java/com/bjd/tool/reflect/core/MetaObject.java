@@ -25,7 +25,7 @@ public class MetaObject {
 
     public static MetaObject forObject(Object originalObject) throws Exception {
         nullProcess(originalObject);
-        return new MetaObject(originalObject,new DefaultReflectorFactory());
+        return new MetaObject(originalObject,DefaultReflectorFactory.getInstance());
     }
 
     public Object getValue(String name) {

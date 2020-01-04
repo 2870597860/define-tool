@@ -7,7 +7,15 @@ public class DefaultReflectorFactory implements ReflectorFactory{
     private boolean classCacheEnabled = true;
     private final ConcurrentMap<Class<?>, Reflector> reflectorMap = new ConcurrentHashMap<Class<?>, Reflector>();
 
-    public DefaultReflectorFactory() {
+    public static DefaultReflectorFactory getInstance(){
+        return Inner.instance;
+    }
+
+    private DefaultReflectorFactory() {
+    }
+
+    private static class Inner{
+        private static final DefaultReflectorFactory instance = new DefaultReflectorFactory();
     }
 
     @Override
@@ -15,9 +23,9 @@ public class DefaultReflectorFactory implements ReflectorFactory{
         return classCacheEnabled;
     }
 
-    @Override
-    public void setClassCacheEnabled(boolean classCacheEnabled) {
-        this.classCacheEnabled = classCacheEnabled;
+    public DefaultReflectorFactory classCacheEnabled(boolean classCacheEnabled){
+         this.classCacheEnabled = classCacheEnabled;
+         return this;
     }
 
     @Override
@@ -33,5 +41,11 @@ public class DefaultReflectorFactory implements ReflectorFactory{
         } else {
             return new Reflector(type);
         }
+    }
+
+    @Override
+    public void initCacheClass(Class<?> type) {
+        Reflector cached = new Reflector(type);
+        reflectorMap.put(type, cached);
     }
 }
