@@ -8,3 +8,7 @@ public interface ReflectorFactory {
 
     void initCacheClass(Class<?> type);
 }
+
+
+
+
